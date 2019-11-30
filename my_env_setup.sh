@@ -2,6 +2,16 @@
 
 # This script installs neovim
 
+SETUP_DIR=""
+
+if [[ ! -d $HOME/spin-off ]]
+then
+    echo -ne "\n\r Setup cannot be started! Please clone \"alexeygumirov/spin-off\" project to home directory.\n"
+    exit 1
+else
+    SETUP_DIR="$HOME/spin-off"
+fi
+
 SETUP_LOG="$HOME/my_env_setup.log"
 timestamp=$(date +%T.%N)
 echo -ne "\r$timestamp: Setup of environment is starting.\n" > "$SETUP_LOG"
@@ -25,13 +35,6 @@ echo -ne "\n\r$TOPIC --- Installing VIM plug-ins manager ---: $timestamp\n" | te
 
 TOPIC="NeoVIM Plug in manager:"
 VIM_PLUG_DIR="$HOME/.local/share/nvim/site/autoload/"
-if [[ ! -d $VIM_PLUG_DIR ]]
-then
-	mkdir -p "$VIM_PLUG_DIR"
-else
-	rm -Rf "$VIM_PLUG_DIR"
-	mkdir -p "$VIM_PLUG_DIR"
-fi
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Download vim.plug ---: $timestamp\n" | tee -a "$SETUP_LOG"
@@ -42,12 +45,16 @@ NEOVIM_PLUGINS_DIR="$HOME/.local/share/nvim/plugged/"
 if [[ ! -d $NEOVIM_PLUGINS_DIR ]]
 then
 	mkdir -p "$NEOVIM_PLUGINS_DIR"
-else
-	rm -Rf "$NEOVIM_PLUGINS_DIR"
-	mkdir -p "$NEOVIM_PLUGINS_DIR"
 fi
 
+# install python3
+# install python3-pip
+
+sudo apt-get install -y python3-pip
+
 # install neovim-remote
+
+pip3 install neovim-remote
 
 # install fzf
 
@@ -64,3 +71,13 @@ git clone --depth
 
 # install vim as main system editor
 
+# install tmux
+
+sudo apt-get install -y tmux
+
+# install tmux configuration
+
+
+# Install tmux plug manager
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
