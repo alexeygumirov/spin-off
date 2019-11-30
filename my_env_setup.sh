@@ -60,5 +60,7 @@ git clone --depth
 
 # create .vimrc and make basic config
 
+
+
 # install vim as main system editor
 
