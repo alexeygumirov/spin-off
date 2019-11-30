@@ -1,0 +1,4 @@
+# Enable VI keys for all programs
+
+set editing-mode vi
+set keymap vi
