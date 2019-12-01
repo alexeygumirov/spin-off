@@ -223,7 +223,7 @@ echo -ne "$TOPIC --- creating my .bashrc file --- : $timestamp\n" | tee -a "$SET
 cp ~/.bashrc ~/.bashrc_copy | tee -a "$SETUP_LOG"
 sed -i_back 's/\(shopt -s histappend\|^HIST*\)/# &/' ~/.bashrc | tee -a "$SETUP_LOG"
 cat "$SETUP_DIR"/configs/.bash_mine ~/.bashrc_copy > ~/.bashrc | tee -a "$SETUP_LOG"
-rm -f ~/.bashr_copy | tee -a "$SETUP_LOG"
+rm -f ~/.bashrc_copy | tee -a "$SETUP_LOG"
 cp "$SETUP_DIR"/configs/.inputrc "$HOME"/ | tee -a "$SETUP_LOG"
 echo -ne "$TOPIC --- Bash setup is complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
 
