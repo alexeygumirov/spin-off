@@ -21,10 +21,6 @@ shopt -s histappend
 # enable vi in the command line
 set -o vi
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
 # Git prompt enabled
 if [ -f /etc/bash_completion.d/git-prompt ]; then
 	    . /etc/bash_completion.d/git-prompt

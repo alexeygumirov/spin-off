@@ -63,7 +63,6 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 
 # setup bash environment
 
-git clone --depth
 
 # create .vimrc and make basic config
 
