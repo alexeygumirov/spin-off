@@ -80,3 +80,9 @@ sudo apt-get install -y tmux
 # Install tmux plug manager
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# Install powerline for bash
+
+sudo apt-get install -y powerline
+
+# Clone config from the repository and copy it
