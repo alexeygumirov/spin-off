@@ -1,0 +1,33 @@
+{
+	"segment_data": {
+		"time": {
+			"istime": true
+		},
+		"hostname": {
+			"args": {
+				"only_if_ssh": false
+			}
+		},
+		"cwd": {
+			"args": {
+				"dir_limit_depth": 6
+			}
+		},
+		"gitstatus": {
+			"args": {
+				"show_tag": "exact",
+				"formats": {
+					"branch": "\ue0a0 {}",
+					"tag": " ★ {}",
+					"behind": " ↓ {}",
+					"ahead": " ↑ {}",
+					"staged": " ● {}",
+					"unmerged": " ✖ {}",
+					"changed": " ✚ {}",
+					"untracked": " … {}",
+					"stashed": " ⚑ {}"
+				}
+			}
+		}
+	}
+}

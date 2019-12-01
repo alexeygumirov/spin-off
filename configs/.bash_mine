@@ -2,6 +2,12 @@
 # It does not change prompt, but installs minimum varialbles, 
 # VIM keys, aliases.
 
+# Powerline
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+. /usr/share/powerline/bindings/bash/powerline.sh 
+
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH=~/.local/bin:~/.scripts:$PATH
@@ -27,13 +33,59 @@ if [ -f /etc/bash_completion.d/git-prompt ]; then
 	fi
 export GIT_PS1_SHOWDIRTYSTATE=1
 
+# maintenance of the ssh-agent
+ssh-add -l &>/dev/null
+if [ "$?" == 2 ]; then
+  test -r ~/.ssh-agent && eval "$(<~/.ssh-agent)" >/dev/null
+  ssh-add -l &>/dev/null
+  if [ "$?" == 2 ]; then
+    (umask 066; ssh-agent > ~/.ssh-agent)
+    eval "$(<~/.ssh-agent)" >/dev/null
+    ssh-add
+  fi
+fi
+
+function tmux() {
+    local tmux=$(type -fp tmux)
+    case "$1" in
+        update-environment|update-env|env-update)
+            local v
+            while read v; do
+                if [[ $v == -* ]]; then
+                    unset ${v/#-/}
+                else
+                    # Add quotes around the argument
+                    v=${v/=/=\"}
+                    v=${v/%/\"}
+                    eval export $v
+                fi
+            done < <(tmux show-environment)
+            ;;
+        *)
+            $tmux "$@"
+            ;;
+    esac
+}
+
+# my dir list function
+function lsdr() {
+	if [[ ! -z $1 ]]; then
+		OLD_PATH_ORIGIN="$OLDPWD"
+		cd "$1"
+		ls -dlLahH */ \.*/
+		cd "$OLDPWD"
+		OLDPWD="$OLD_PATH_ORIGIN"
+	else
+		ls -dlLahH */ \.*/
+	fi
+}
+
 # -------my alias-----
 alias l='ls -x --group-directories-first'
 alias lsd='ls -lAFhNH --group-directories-first'
 alias lsc='ls -alcN'
-alias lsdr='ls -lAFhH | grep "/$"'
+alias lsdr='lsdr'
 alias psx='ps -aux | grep -v "ps -aux"'
 alias psf='ps -ef | grep -v "ps -ef"'
-alias e=$VISUAL
-alias er='~/.local/bin/nvr'
-alias vim=$VISUAL
+alias e=$(which nvim)
+alias er=$(which nvr)
