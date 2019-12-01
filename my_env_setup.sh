@@ -229,5 +229,3 @@ echo -ne "$TOPIC --- Bash setup is complete --- : $timestamp\n" | tee -a "$SETUP
 
 # End - Setup Bash environment
 ### }
-
-source ~/.bashrc
