@@ -210,3 +210,18 @@ function! TabToggle()
   echo "Tab mode:" g:TabModeList[g:TabMode]
 endfunction
 nmap <silent> <F9> :call TabToggle()<CR>
+
+let g:TagConLevel = 0
+let g:TagConLevelList = [ "level is 2", "level is 0" ]
+function! TagConcealLevel()
+	let g:TagConLevel = g:TagConLevel + 1
+	if g:TagConLevel >= len(g:TagConLevelList) | let g:TagConLevel = 0 | endif
+	if g:TagConLevel == 1
+		set conceallevel=0
+	endif
+	if g:TagConLevel == 0
+		set conceallevel=2
+	endif
+	echo "Conceal " g:TagConLevelList[g:TagConLevel]
+endfunction
+nmap <leader>c :call TagConcealLevel()<CR>
