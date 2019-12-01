@@ -4,12 +4,12 @@
 
 SETUP_DIR=""
 
-if [[ ! -d $HOME/spin-off ]]
+if [[ ! -d $HOME/.spin-off ]]
 then
     echo -ne "\n\r Setup cannot be started! Please clone \"alexeygumirov/spin-off\" project to home directory.\n"
     exit 1
 else
-    SETUP_DIR="$HOME/spin-off"
+    SETUP_DIR="$HOME/.spin-off"
 fi
 
 SETUP_LOG="$HOME/my_env_setup.log"
