@@ -89,3 +89,4 @@ alias psx='ps -aux | grep -v "ps -aux"'
 alias psf='ps -ef | grep -v "ps -ef"'
 alias e=$(which nvim)
 alias er=$(which nvr)
+alias vim=$(which vim)
