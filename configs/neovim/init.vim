@@ -1,6 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
@@ -13,7 +13,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 " Plug 'easymotion/vim-easymotion'
 Plug 'mattn/Stupid-EasyMotion'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 call plug#end()
 
@@ -44,7 +44,6 @@ set autoindent
 set nocompatible
 set inccommand=split
 
-set termencoding=utf-8
 set encoding=utf-8
 
 set path+=**
@@ -134,6 +133,9 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 " enable/disable displaying index of the buffer
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+
+" tab formatter
+let g:airline#extensions#tabline#formatter = 'default'
 
 " Change leader key
 let mapleader = " "
