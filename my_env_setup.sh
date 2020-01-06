@@ -93,23 +93,6 @@ echo -ne "\n\r$TOPIC --- Intstallation complete --- : $timestamp\n" | tee -a "$S
 
 
 ### {
-# Begin - Install FZF
-
-TOPIC="FZF:"
-
-timestamp=$(date +%T.%N)
-echo -ne "\n\r$TOPIC --- Installting --- : $timestamp\n" | tee -a "$SETUP_LOG"
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf | tee -a "$SETUP_LOG"
-~/.fzf/install | tee -a "$SETUP_LOG"
-
-timestamp=$(date +%T.%N)
-echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
-
-# End - Install FZF
-### }
-
-
-### {
 # Begin - Install VIM
 
 TOPIC="VIM:"
@@ -220,12 +203,29 @@ echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_
 TOPIC="Bash environment:"
 timestamp=$(date +%T.%N)
 echo -ne "$TOPIC --- creating my .bashrc file --- : $timestamp\n" | tee -a "$SETUP_LOG"
-cp ~/.bashrc ~/.bashrc_copy | tee -a "$SETUP_LOG"
-sed -i_back 's/\(shopt -s histappend\|^HIST*\)/# &/' ~/.bashrc | tee -a "$SETUP_LOG"
-cat "$SETUP_DIR"/configs/.bash_mine ~/.bashrc_copy > ~/.bashrc | tee -a "$SETUP_LOG"
-rm -f ~/.bashrc_copy | tee -a "$SETUP_LOG"
+cp ~/.bashrc ~/.bashrc_original.bak | tee -a "$SETUP_LOG"
+cp "$SETUP_DIR"/configs/.bashrc "$HOME"/ | tee -a "$SETUP_LOG"
+cp "$SETUP_DIR"/configs/.bashrc_aliases "$HOME"/ | tee -a "$SETUP_LOG"
 cp "$SETUP_DIR"/configs/.inputrc "$HOME"/ | tee -a "$SETUP_LOG"
 echo -ne "$TOPIC --- Bash setup is complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
 
 # End - Setup Bash environment
 ### }
+
+### {
+# Begin - Install FZF
+
+TOPIC="FZF:"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installting --- : $timestamp\n" | tee -a "$SETUP_LOG"
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf | tee -a "$SETUP_LOG"
+~/.fzf/install | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - Install FZF
+### }
+
+source ~/.bashrc
