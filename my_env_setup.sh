@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script installs neovim
+# This script installs my configs and tools (neovim, fzf, etc.)
 
 SETUP_DIR=""
 
@@ -41,7 +41,7 @@ NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
 
 timestamp=$(date +%T.%N)
 echo -ne "$TOPIC --- Adding repository --- : $timestamp\n" | tee -a "$SETUP_LOG"
-sudo add-apt-repository ppa:neovim-ppa/unstable -y | tee -a "$SETUP_LOG"
+sudo add-apt-repository ppa:neovim-ppa/stable -y | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
