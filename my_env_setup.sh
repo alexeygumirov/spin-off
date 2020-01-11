@@ -223,6 +223,15 @@ wget https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb |
 sudo dpkg -i fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installting silversearcher-ag --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install -y silversearcher-ag | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installting ripgrep --- : $timestamp\n" | tee -a "$SETUP_LOG"
+wget https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+sudo dpkg -i ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting fzf --- : $timestamp\n" | tee -a "$SETUP_LOG"
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf | tee -a "$SETUP_LOG"
 ~/.fzf/install | tee -a "$SETUP_LOG"
@@ -232,5 +241,3 @@ echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SE
 
 # End - Install FZF
 ### }
-
-source ~/.bashrc

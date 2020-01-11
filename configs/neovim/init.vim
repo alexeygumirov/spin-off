@@ -14,6 +14,7 @@ Plug 'tpope/vim-commentary'
 " Plug 'easymotion/vim-easymotion'
 Plug 'mattn/Stupid-EasyMotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -47,7 +48,7 @@ set inccommand=split
 set encoding=utf-8
 
 set path+=**
-set shell=/bin/bash\ -i
+set shell=/bin/bash
 " --configs hybrid line numbering
 set number relativenumber
 set showcmd
