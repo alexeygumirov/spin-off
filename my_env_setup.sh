@@ -231,8 +231,9 @@ sudo apt-get install -y silversearcher-ag | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting ripgrep --- : $timestamp\n" | tee -a "$SETUP_LOG"
-wget https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+curl -OL https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
 sudo dpkg -i ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+rm -f ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting fzf --- : $timestamp\n" | tee -a "$SETUP_LOG"
