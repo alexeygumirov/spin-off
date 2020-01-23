@@ -30,7 +30,6 @@ echo -ne "$TOPIC --- Update and upgrade complete --- : $timestamp\n" | tee -a "$
 # End - Repo update and upgrade
 ### }
 
-
 ### {
 # Begin - Install NeoVIM
 
@@ -98,7 +97,6 @@ echo -ne "\n\r$TOPIC --- Intstallation complete --- : $timestamp\n" | tee -a "$S
 # End - Install NeoVIM
 ### }
 
-
 ### {
 # Begin - Install VIM
 
@@ -148,7 +146,6 @@ echo -ne "\n\r$TOPIC --- Intstallation complete --- : $timestamp\n" | tee -a "$S
 # End - Install VIM
 ### }
 
-
 ### {
 # Begin - Install TMUX
 
@@ -178,7 +175,6 @@ echo -ne "\n\r$TOPIC --- Intstallation complete --- : $timestamp\n" | tee -a "$S
 # End - Install TMUX
 ### }
 
-
 ### {
 # Begin - Install powerline for bash
 
@@ -202,7 +198,6 @@ echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_
 
 # End - Install powerline for bash
 ### }
-
 
 ### {
 # Begin - Setup Bash environment
@@ -229,6 +224,15 @@ echo -ne "\n\r$TOPIC --- Installting fd --- : $timestamp\n" | tee -a "$SETUP_LOG
 curl -OL https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
 sudo dpkg -i fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
 rm -f fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installting silversearcher-ag --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install -y silversearcher-ag | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installting ripgrep --- : $timestamp\n" | tee -a "$SETUP_LOG"
+wget https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+sudo dpkg -i ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting fzf --- : $timestamp\n" | tee -a "$SETUP_LOG"
