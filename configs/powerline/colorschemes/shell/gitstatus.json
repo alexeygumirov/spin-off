@@ -1,4 +1,5 @@
 {
+	"_comment_": "Alexey Gumirov's config for Ubuntu (generic)",
 	"name": "Default color scheme for shell prompts",
 	"groups": {
 		"hostname":         { "fg": "brightyellow", "bg": "mediumorange", "attrs": [] },

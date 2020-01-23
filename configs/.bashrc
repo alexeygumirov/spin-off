@@ -1,3 +1,14 @@
+#####################################################
+#           _    ____                   __          #
+#          / \  / ___|  ___ ___  _ __  / _|         #
+#         / _ \| |  _  / __/ _ \| '_ \| |_          #
+#        / ___ \ |_| || (_| (_) | | | |  _|         #
+#       /_/   \_\____(_)___\___/|_| |_|_|           #
+#                                                   #
+#       Alexey Gumirov's generic config for         #
+#       Ubuntu based operating systems.             #
+#####################################################
+#
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -16,6 +27,7 @@ export LANG=en_US.UTF-8
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export VISUAL=$(which nvim)
 export EDITOR="$VISUAL"
+export YOUTUBEDLDIR="~/downloads/youtube-dl/"
 
 # If not running interactively, don't do anything
 case $- in

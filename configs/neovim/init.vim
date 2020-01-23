@@ -1,3 +1,14 @@
+" #####################################################
+" #           _    ____                   __          #
+" #          / \  / ___|  ___ ___  _ __  / _|         #
+" #         / _ \| |  _  / __/ _ \| '_ \| |_          #
+" #        / ___ \ |_| || (_| (_) | | | |  _|         #
+" #       /_/   \_\____(_)___\___/|_| |_|_|           #
+" #                                                   #
+" #       Alexey Gumirov's generic config for         #
+" #       Ubuntu based operating systems.             #
+" #####################################################
+"
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -14,6 +25,7 @@ Plug 'tpope/vim-commentary'
 " Plug 'easymotion/vim-easymotion'
 Plug 'mattn/Stupid-EasyMotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -47,7 +59,7 @@ set inccommand=split
 set encoding=utf-8
 
 set path+=**
-set shell=/bin/bash\ -i
+set shell=/bin/bash
 " --configs hybrid line numbering
 set number relativenumber
 set showcmd
@@ -171,10 +183,22 @@ function! ToggleSpell()
   echo "spell checking language:" g:myLangList[g:myLang]
 endfunction
 
+"switch Deoplete status
+let g:myDeoplete = 0
+let g:myDeopleteStatusList = [ "Disabled", "Enabled" ]
+function! MyToggleDeoplete()
+  "loop through Deoplete status
+  let g:myDeoplete = g:myDeoplete + 1
+  if g:myDeoplete >= len(g:myDeopleteStatusList) | let g:myDeoplete = 0 | endif
+  if g:myDeoplete == 0 | call deoplete#disable() | endif
+  if g:myDeoplete == 1 | call deoplete#enable() | endif
+  echo "Deoplete is" g:myDeopleteStatusList[g:myDeoplete]
+endfunction
+
 map <F3> :call NumberToggle()<CR>
 map <F4> :NERDTreeToggle<CR>
 " Toggle Deoplete
-nmap <F5> :call deoplete#toggle()<CR>
+nmap <F5> :call MyToggleDeoplete()<CR>
 nmap <silent> <F7> :call ToggleSpell()<CR>
 
 " My mappings to work with Windows buffer
@@ -183,7 +207,7 @@ nmap <leader>P "*P
 nmap <leader>y "*yy
 vmap <leader>y "*y
 
-" FZF hotkeu
+" FZF hotkeys
 nmap <leader>f :FZF <CR>
 nmap <leader>h :FZF ~ <CR>
 
@@ -227,3 +251,11 @@ function! TagConcealLevel()
 	echo "Conceal " g:TagConLevelList[g:TagConLevel]
 endfunction
 nmap <leader>c :call TagConcealLevel()<CR>
+
+" change path to file path
+nmap <leader>l :cd %:p:h<CR>:pwd<CR>
+
+" commands to insert my headers
+command -bang -nargs=0 MyHeaderHome :r! cat ~/.config/myheaders/home
+command -bang -nargs=0 MyHeaderWork :r! cat ~/.config/myheaders/work
+command -bang -nargs=0 MyHeaderOther :r! cat ~/.config/myheaders/other_ubuntu

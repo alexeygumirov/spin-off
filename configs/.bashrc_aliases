@@ -1,3 +1,14 @@
+#####################################################
+#           _    ____                   __          #
+#          / \  / ___|  ___ ___  _ __  / _|         #
+#         / _ \| |  _  / __/ _ \| '_ \| |_          #
+#        / ___ \ |_| || (_| (_) | | | |  _|         #
+#       /_/   \_\____(_)___\___/|_| |_|_|           #
+#                                                   #
+#       Alexey Gumirov's generic config for         #
+#       Ubuntu based operating systems.             #
+#####################################################
+
 # My bashrc aliases
 
 # some more ls aliases
@@ -23,3 +34,98 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # alias ssh-ag-start='eval `ssh-agent -s`'
 # alias ssh-ag-kill='eval `ssh-agent -k`'
 alias ssh-add='ssh-add -t 21600'
+
+function e-fuzzy(){
+    local FZF_header="Select files to edit in NVIM. Ctrl-a: select all, Ctrl-space: deselect all."
+	$(which nvim) $(fd --type f --follow --max-depth 2 --hidden --exclude .git | fzf -m --header="$FZF_header" --reverse --height 50% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap)
+}
+
+function er-fuzzy(){
+    local FZF_header="Select files to send to NVIM for editing. Ctrl-a: select all, Ctrl-space: deselect all."
+    ~/.local/bin/nvr $(fd --type f --follow --max-depth 2 --hidden --exclude .git | fzf -m --header="$FZF_header" --reverse --height 50% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap)
+}
+
+function cd-fuzzy(){
+    local FZF_header="Find folder to go to."
+    local DIRECTORY_FZF="$(fd --follow --type d --hidden --exclude .git . | fzf +m --header="$FZF_header" --reverse --height 60% --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --border --preview 'tree --du -h -L 1 -a -C --dirsfirst {}' --preview-window=right:40%)"
+    cd "$DIRECTORY_FZF"
+}
+
+function rm-file-fuzzy(){
+    local FZF_header="Find files to remove. Depth 2. Ctrl-a: select all, Ctrl-space: deselect all."
+    if [[ $1 == "-f" ]]; then
+        fd --follow --type f --max-depth 2 --hidden --exclude .git . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all --bind 'enter:execute[rm -f {+}]+abort'
+    fi
+    if [[ -z $1 ]]; then
+        fd --follow --type f --max-depth 2 --hidden --exclude .git . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all --bind 'enter:execute[rm {+}]+abort'
+    fi
+}
+
+function rmdir-fuzzy(){
+    local FZF_header="Find folders to remove. Depth 2. Ctrl-a: select all, Ctrl-space: deselect all."
+    if [[ $1 == "-f" ]]; then
+        fd --follow --type d --max-depth 2 --hidden . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'tree --du -h -L 1 -a -C --dirsfirst {}' --preview-window=right:40% --bind 'enter:execute[rm -Rf {+}]+abort'
+    fi
+    if [[ -z $1 ]]; then
+        fd --follow --type d --max-depth 2 --hidden . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'tree --du -h -L 1 -a -C --dirsfirst {}' --preview-window=right:40% --bind 'enter:execute[rmdir {+}]+abort'
+    fi
+}
+
+function preview(){
+    if [[ ! -z $1 ]]; then
+        local FZF_header="Preview of \`$1\` files."
+        fd --type f -e $1 --hidden --follow --exclude .git . | fzf +m --header="$FZF_header" --reverse --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap
+    else
+        local FZF_header="\`preview <ext>\` shows files of defined extension."
+        fd --type f --hidden --follow --exclude .git . | fzf +m --header="$FZF_header" --reverse --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap
+    fi
+}
+
+# git functions
+function gitadd-fuzzy(){
+    local FZF_header="\`git-add\`. Select files."
+    git add $(git ls-files --modified --others --exclude-standard | fzf -m --header="$FZF_header" --reverse --border --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git diff --color=always {} | bat -l"Git Commit" --color=always' --preview-window=right:75%)
+}
+
+function gitdiff-fuzzy(){
+    local FZF_header="\`git-diff\`. Select files."
+    git status -s | grep "^ M" | cut -d" " -f3 | fzf +m --header="$FZF_header" --reverse --border --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git diff --color=always {} | bat -l"Git Commit" --color=always' --preview-window=right:75%:wrap
+}
+
+#git restore
+function gitrestore-staged-fuzzy(){
+    local FZF_header="\`git-restore --staged\`. Select files."
+    git restore --staged $(git status -s | grep "^D\|^M" | fzf -m --header="$FZF_header" --reverse --border --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all | cut -d" " -f3)
+}
+
+function gitrestore-unstaged-fuzzy(){
+    local FZF_header="\`git-restore\` of unstaged. Select files."
+    git restore $(git status -s | grep "^ D\|^ M" | cut -d" " -f3 | fzf -m --header="$FZF_header" --reverse --border --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git diff --color=always {} | bat -l"Diff" --color=always' --preview-window=right:75%)
+}
+
+#git rm 
+function gitrm-fuzzy(){
+    local FZF_header="\`git-rm\`. Select files."
+    git rm $(git ls-files | fzf -m --header="$FZF_header" --reverse --border --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --color=always {}' --preview-window=right:75%)
+}
+
+function gitlog-fuzzy(){
+    local FZF_header="\`git-log\`. Select commit."
+    git log --pretty=oneline | cut -c-20 | fzf -m --header="$FZF_header" --reverse --border --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git show --color=always {} | bat -l"Git Commit" --color=always' --preview-window=right:75%
+}
+
+function gitmerge-fuzzy(){
+    local FZF_header="\`git-merge\`. Select branch to merge."
+    local branch=`git branch -a | sed 's/^\*//; s/^[ \t]*//; /HEAD.*/d; /^remotes\/origin\/$/d' | fzf +m --header="$FZF_header" --height 40% --border --reverse --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git log --color=always {} -10'  --preview-window=right:75% | sed 's/remotes\/origin\///'`
+    if [[ ! -z $branch ]]; then
+        git merge $branch
+    fi
+}
+
+function gitcheckout-branch-fuzzy(){
+    local FZF_header="\`git-checkout <branch>\`. Select branch to checkout."
+    local branch=`git branch -a | sed 's/^\*//; s/^[ \t]*//; /HEAD.*/d; /^remotes\/origin\/$/d' | fzf +m --header="$FZF_header" --height 40% --border --reverse --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git log --color=always {} -10'  --preview-window=right:75% | sed 's/remotes\/origin\///'`
+    if [[ $branch ]]; then
+        git checkout $branch
+    fi
+}

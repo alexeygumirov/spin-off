@@ -79,8 +79,15 @@ then
 fi
 
 timestamp=$(date +%T.%N)
-echo -ne "\n\r$TOPIC --- Installing \"neovim-remote\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
+echo -ne "\n\r$TOPIC --- Installing \"pip3\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
 sudo apt-get install python3-pip -y | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installing \"neovim\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
+pip3 install --user -y neovim | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installing \"neovim-remote\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
 pip3 install -y neovim-remote | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
@@ -213,14 +220,15 @@ echo -ne "$TOPIC --- Bash setup is complete --- : $timestamp\n" | tee -a "$SETUP
 ### }
 
 ### {
-# Begin - Install FZF
+# Begin - Install FZF and FD
 
-TOPIC="FZF:"
+TOPIC="FZF & FD:"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting fd --- : $timestamp\n" | tee -a "$SETUP_LOG"
-wget https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
+curl -OL https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
 sudo dpkg -i fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
+rm -f fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting fzf --- : $timestamp\n" | tee -a "$SETUP_LOG"
@@ -233,4 +241,34 @@ echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SE
 # End - Install FZF
 ### }
 
-source ~/.bashrc
+### {
+# Begin - Install BAT viewer
+
+TOPIC="bat:"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installting bat --- : $timestamp\n" | tee -a "$SETUP_LOG"
+curl -OL https://github.com/sharkdp/bat/releases/download/v0.12.1/bat_0.12.1_amd64.deb | tee -a "$SETUP_LOG"
+sudo dpkg -i bat_0.12.1_amd64.deb | tee -a "$SETUP_LOG"
+rm -f bat_0.12.1_amd64.deb
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - Install FZF
+### }
+
+### {
+# Copy of my headers
+TOPIC="my headers:"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Copying my headers --- : $timestamp\n" | tee -a "$SETUP_LOG"
+mkdir -p ~/.config/myheaders | tee -a "$SETUP_LOG"
+cp "$SETUP_DIR"/configs/myheaders/* ~/.config/myheaders | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Copying complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - Copy of my headers
+### }
