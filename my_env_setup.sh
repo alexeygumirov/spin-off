@@ -265,6 +265,7 @@ echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SE
 
 ### {
 # Copy of my headers
+
 TOPIC="my headers:"
 
 timestamp=$(date +%T.%N)
@@ -276,4 +277,20 @@ timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Copying complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
 
 # End - Copy of my headers
+### }
+
+### {
+# installation of 'tree'
+
+TOPIC="tree:"
+
+timestamp=$(date +%T.%N)
+
+echo -ne "\n\r$TOPIC --- Installing \"tree\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install tree -y | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - Installation of 'tree'
 ### }
