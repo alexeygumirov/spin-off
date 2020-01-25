@@ -298,8 +298,8 @@ case $PLATFORM in
         ;;
     *)
         echo -ne "\n\r$TOPIC --- bat cannot be installed. Please visit https://github.com/sharkdp/bat/releases for version to your platform. --- : $timestamp\n" | tee -a "$SETUP_LOG"
-
-
+        ;;
+esac
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
