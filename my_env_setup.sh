@@ -286,11 +286,27 @@ TOPIC="tree:"
 
 timestamp=$(date +%T.%N)
 
-echo -ne "\n\r$TOPIC --- Installing \"tree\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
+echo -ne "\n\r$TOPIC --- Installing  --- : $timestamp\n" | tee -a "$SETUP_LOG"
 sudo apt-get install tree -y | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
 
 # End - Installation of 'tree'
+### }
+
+### {
+# installation of powerline fonts
+
+TOPIC="powerline fonts:"
+
+timestamp=$(date +%T.%N)
+
+echo -ne "\n\r$TOPIC --- Installing  --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install fonts-powerline -y | tee -a "$SETUP_LOG"
+
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - Installation of powerline fonts
 ### }
