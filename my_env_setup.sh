@@ -3,6 +3,7 @@
 # This script installs my configs and tools (neovim, fzf, etc.)
 
 SETUP_DIR=""
+PLATFORM=""
 
 if [[ ! -d $HOME/.spin-off ]]
 then
@@ -10,6 +11,16 @@ then
     exit 1
 else
     SETUP_DIR="$HOME/.spin-off"
+fi
+
+if [[ ! -z $(uname -m | grep "x86_64") ]]
+then
+    PLATFORM="x86_64"
+fi
+
+if [[ ! -z $(uname -m | grep "armv7") ]]
+then
+    PLATFORM="armhf"
 fi
 
 SETUP_LOG="$HOME/my_env_setup.log"
@@ -220,20 +231,40 @@ echo -ne "$TOPIC --- Bash setup is complete --- : $timestamp\n" | tee -a "$SETUP
 TOPIC="FZF & FD:"
 
 timestamp=$(date +%T.%N)
-echo -ne "\n\r$TOPIC --- Installting fd --- : $timestamp\n" | tee -a "$SETUP_LOG"
-curl -OL https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
-sudo dpkg -i fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
-rm -f fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
+case $PLATFORM in
+    "x86_64")
+        echo -ne "\n\r$TOPIC --- Installting fd --- : $timestamp\n" | tee -a "$SETUP_LOG"
+        curl -OL https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
+        sudo dpkg -i fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
+        rm -f fd_7.4.0_amd64.deb | tee -a "$SETUP_LOG"
+        ;;
+    "armhf")
+        echo -ne "\n\r$TOPIC --- Installting fd --- : $timestamp\n" | tee -a "$SETUP_LOG"
+        curl -OL https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_armhf.deb | tee -a "$SETUP_LOG"
+        sudo dpkg -i fd_7.4.0_armhf.deb | tee -a "$SETUP_LOG"
+        rm -f fd_7.4.0_armhf.deb | tee -a "$SETUP_LOG"
+        ;;
+    *)
+        echo -ne "\n\r$TOPIC --- FD cannot be installed. Please visit https://github.com/sharkdp/fd/releases for version to your platform. --- : $timestamp\n" | tee -a "$SETUP_LOG"
+        ;;
+esac
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting silversearcher-ag --- : $timestamp\n" | tee -a "$SETUP_LOG"
 sudo apt-get install -y silversearcher-ag | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
-echo -ne "\n\r$TOPIC --- Installting ripgrep --- : $timestamp\n" | tee -a "$SETUP_LOG"
-curl -OL https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
-sudo dpkg -i ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
-rm -f ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+case $PLATFORM in
+    "x86_64")
+        echo -ne "\n\r$TOPIC --- Installting ripgrep --- : $timestamp\n" | tee -a "$SETUP_LOG"
+        curl -OL https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+        sudo dpkg -i ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+        rm -f ripgrep_11.0.2_amd64.deb | tee -a "$SETUP_LOG"
+        ;;
+    *)
+        echo -ne "\n\r$TOPIC --- ripgrep cannot be installed. Please visit https://github.com/BurntSushi/ripgrep/releases for version to your platform. --- : $timestamp\n" | tee -a "$SETUP_LOG"
+        ;;
+esac
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installting fzf --- : $timestamp\n" | tee -a "$SETUP_LOG"
@@ -252,10 +283,23 @@ echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SE
 TOPIC="bat:"
 
 timestamp=$(date +%T.%N)
-echo -ne "\n\r$TOPIC --- Installting bat --- : $timestamp\n" | tee -a "$SETUP_LOG"
-curl -OL https://github.com/sharkdp/bat/releases/download/v0.12.1/bat_0.12.1_amd64.deb | tee -a "$SETUP_LOG"
-sudo dpkg -i bat_0.12.1_amd64.deb | tee -a "$SETUP_LOG"
-rm -f bat_0.12.1_amd64.deb
+case $PLATFORM in
+    "x86_64")
+        echo -ne "\n\r$TOPIC --- Installting bat --- : $timestamp\n" | tee -a "$SETUP_LOG"
+        curl -OL https://github.com/sharkdp/bat/releases/download/v0.12.1/bat_0.12.1_amd64.deb | tee -a "$SETUP_LOG"
+        sudo dpkg -i bat_0.12.1_amd64.deb | tee -a "$SETUP_LOG"
+        rm -f bat_0.12.1_amd64.deb
+        ;;
+    "armhf")
+        echo -ne "\n\r$TOPIC --- Installting bat --- : $timestamp\n" | tee -a "$SETUP_LOG"
+        curl -OL https://github.com/sharkdp/bat/releases/download/v0.12.1/bat_0.12.1_armhf.deb | tee -a "$SETUP_LOG"
+        sudo dpkg -i bat_0.12.1_armhf.deb | tee -a "$SETUP_LOG"
+        rm -f bat_0.12.1_armhf.deb
+        ;;
+    *)
+        echo -ne "\n\r$TOPIC --- bat cannot be installed. Please visit https://github.com/sharkdp/bat/releases for version to your platform. --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
