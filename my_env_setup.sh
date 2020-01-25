@@ -94,11 +94,11 @@ sudo apt-get install python3-pip -y | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installing \"neovim\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
-pip3 install --user -y neovim | tee -a "$SETUP_LOG"
+pip3 install --user neovim | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Installing \"neovim-remote\" --- : $timestamp\n" | tee -a "$SETUP_LOG"
-pip3 install -y neovim-remote | tee -a "$SETUP_LOG"
+pip3 install --user neovim-remote | tee -a "$SETUP_LOG"
 
 timestamp=$(date +%T.%N)
 echo -ne "\n\r$TOPIC --- Intstallation of \"neovim-remote\" complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
@@ -354,3 +354,4 @@ echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SE
 
 # End - Installation of powerline fonts
 ### }
+
