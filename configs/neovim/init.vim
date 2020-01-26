@@ -1,14 +1,14 @@
 " #####################################################
-" #           _    ____                   __          #
-" #          / \  / ___|  ___ ___  _ __  / _|         #
-" #         / _ \| |  _  / __/ _ \| '_ \| |_          #
-" #        / ___ \ |_| || (_| (_) | | | |  _|         #
-" #       /_/   \_\____(_)___\___/|_| |_|_|           #
+" #      _    ____       _   _                        #
+" #     / \  / ___|     | | | | ___  _ __ ___   ___   #
+" #    / _ \| |  _ _____| |_| |/ _ \| '_ ` _ \ / _ \  #
+" #   / ___ \ |_| |_____|  _  | (_) | | | | | |  __/  #
+" #  /_/   \_\____|     |_| |_|\___/|_| |_| |_|\___|  #
 " #                                                   #
-" #       Alexey Gumirov's generic config for         #
-" #       Ubuntu based operating systems.             #
+" #     Alexey Gumirov's home PC config for the       #
+" #     Windows Subsystem for Linux - Ubuntu.         #
 " #####################################################
-"
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -219,16 +219,16 @@ set expandtab
 set smarttab
 " allow toggling between local and default mode
 let g:TabMode = 0
-let g:TabModeList = [ "Expand Tab", "No Expand Tab" ]
+let g:TabModeList = [ "No Expand Tab", "Expand Tab" ]
 function! TabToggle()
   let g:TabMode = g:TabMode + 1
   if g:TabMode >= len(g:TabModeList) | let g:TabMode = 0 | endif
-  if g:TabMode == 1
+  if g:TabMode == 0
     set shiftwidth=8
     set softtabstop=0
     set noexpandtab
   endif
-  if g:TabMode == 0
+  if g:TabMode == 1
     set shiftwidth=4
     set softtabstop=4
     set expandtab
