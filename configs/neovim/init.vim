@@ -1,14 +1,14 @@
 " #####################################################
-" #      _    ____       _   _                        #
-" #     / \  / ___|     | | | | ___  _ __ ___   ___   #
-" #    / _ \| |  _ _____| |_| |/ _ \| '_ ` _ \ / _ \  #
-" #   / ___ \ |_| |_____|  _  | (_) | | | | | |  __/  #
-" #  /_/   \_\____|     |_| |_|\___/|_| |_| |_|\___|  #
+" #           _    ____                   __          #
+" #          / \  / ___|  ___ ___  _ __  / _|         #
+" #         / _ \| |  _  / __/ _ \| '_ \| |_          #
+" #        / ___ \ |_| || (_| (_) | | | |  _|         #
+" #       /_/   \_\____(_)___\___/|_| |_|_|           #
 " #                                                   #
-" #     Alexey Gumirov's home PC config for the       #
-" #     Windows Subsystem for Linux - Ubuntu.         #
+" #       Alexey Gumirov's generic config for         #
+" #       Ubuntu based operating systems.             #
 " #####################################################
-
+"
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
