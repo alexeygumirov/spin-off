@@ -8,10 +8,9 @@
 " #       Alexey Gumirov's generic config for         #
 " #       Ubuntu based operating systems.             #
 " #####################################################
-"
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
@@ -31,19 +30,19 @@ call plug#end()
 
 " { Color schemes section
 "
-"	{ PaperColor
+"   { PaperColor
 set t_Co=256   " This is may or may not needed.
 " set background=light
 set background=dark
 let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default.dark': {
-  \       'transparent_background': 1
-  \     }
-  \   }
-  \ }
+            \   'theme': {
+            \     'default.dark': {
+            \       'transparent_background': 1
+            \     }
+            \   }
+            \ }
 color PaperColor
-"	} end of PaperColor
+"   } end of PaperColor
 "
 " } End of color scheme section
 
@@ -85,7 +84,7 @@ let g:netrw_sort_sequence = '[\/]$,*'
 " set autochdir
 
 " indent lines
-let g:indentLine_char = '|'
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 autocmd FileType markdown let g:indentLine_enabled=0
 
@@ -174,25 +173,25 @@ let g:airline_powerline_fonts = 1
 let g:myLang = 0
 let g:myLangList = [ "nospell", "en_us", "de_de" ]
 function! ToggleSpell()
-  "loop through languages
-  let g:myLang = g:myLang + 1
-  if g:myLang >= len(g:myLangList) | let g:myLang = 0 | endif
-  if g:myLang == 0 | set nospell | endif
-  if g:myLang == 1 | setlocal spell spelllang=en_us | endif
-  if g:myLang == 2 | setlocal spell spelllang=de_de | endif
-  echo "spell checking language:" g:myLangList[g:myLang]
+    "loop through languages
+    let g:myLang = g:myLang + 1
+    if g:myLang >= len(g:myLangList) | let g:myLang = 0 | endif
+    if g:myLang == 0 | set nospell | endif
+    if g:myLang == 1 | setlocal spell spelllang=en_us | endif
+    if g:myLang == 2 | setlocal spell spelllang=de_de | endif
+    echo "spell checking language:" g:myLangList[g:myLang]
 endfunction
 
 "switch Deoplete status
 let g:myDeoplete = 0
 let g:myDeopleteStatusList = [ "Disabled", "Enabled" ]
 function! MyToggleDeoplete()
-  "loop through Deoplete status
-  let g:myDeoplete = g:myDeoplete + 1
-  if g:myDeoplete >= len(g:myDeopleteStatusList) | let g:myDeoplete = 0 | endif
-  if g:myDeoplete == 0 | call deoplete#disable() | endif
-  if g:myDeoplete == 1 | call deoplete#enable() | endif
-  echo "Deoplete is" g:myDeopleteStatusList[g:myDeoplete]
+    "loop through Deoplete status
+    let g:myDeoplete = g:myDeoplete + 1
+    if g:myDeoplete >= len(g:myDeopleteStatusList) | let g:myDeoplete = 0 | endif
+    if g:myDeoplete == 0 | call deoplete#disable() | endif
+    if g:myDeoplete == 1 | call deoplete#enable() | endif
+    echo "Deoplete is" g:myDeopleteStatusList[g:myDeoplete]
 endfunction
 
 map <F3> :call NumberToggle()<CR>
@@ -207,11 +206,11 @@ nmap <leader>P "*P
 nmap <leader>y "*yy
 vmap <leader>y "*y
 
-" FZF hotkeys
+" FZF hotkeu
 nmap <leader>f :FZF <CR>
 nmap <leader>h :FZF ~ <CR>
 
-set tabstop=8
+set tabstop=4
 " virtual tabstops using spaces
 set shiftwidth=4
 set softtabstop=4
@@ -219,36 +218,36 @@ set expandtab
 set smarttab
 " allow toggling between local and default mode
 let g:TabMode = 0
-let g:TabModeList = [ "No Expand Tab", "Expand Tab" ]
+let g:TabModeList = [ "Expand Tab", "No Expand Tab" ]
 function! TabToggle()
-  let g:TabMode = g:TabMode + 1
-  if g:TabMode >= len(g:TabModeList) | let g:TabMode = 0 | endif
-  if g:TabMode == 0
-    set shiftwidth=8
-    set softtabstop=0
-    set noexpandtab
-  endif
-  if g:TabMode == 1
-    set shiftwidth=4
-    set softtabstop=4
-    set expandtab
-  endif
-  echo "Tab mode:" g:TabModeList[g:TabMode]
+    let g:TabMode = g:TabMode + 1
+    if g:TabMode >= len(g:TabModeList) | let g:TabMode = 0 | endif
+    if g:TabMode == 0
+        set shiftwidth=4
+        set softtabstop=4
+        set expandtab
+    endif
+    if g:TabMode == 1
+        set shiftwidth=4
+        set softtabstop=0
+        set noexpandtab
+    endif
+    echo "Tab mode:" g:TabModeList[g:TabMode]
 endfunction
 nmap <silent> <F9> :call TabToggle()<CR>
 
 let g:TagConLevel = 0
 let g:TagConLevelList = [ "level is 2", "level is 0" ]
 function! TagConcealLevel()
-	let g:TagConLevel = g:TagConLevel + 1
-	if g:TagConLevel >= len(g:TagConLevelList) | let g:TagConLevel = 0 | endif
-	if g:TagConLevel == 1
-		set conceallevel=0
-	endif
-	if g:TagConLevel == 0
-		set conceallevel=2
-	endif
-	echo "Conceal " g:TagConLevelList[g:TagConLevel]
+    let g:TagConLevel = g:TagConLevel + 1
+    if g:TagConLevel >= len(g:TagConLevelList) | let g:TagConLevel = 0 | endif
+    if g:TagConLevel == 1
+        set conceallevel=0
+    endif
+    if g:TagConLevel == 0
+        set conceallevel=2
+    endif
+    echo "Conceal " g:TagConLevelList[g:TagConLevel]
 endfunction
 nmap <leader>c :call TagConcealLevel()<CR>
 
@@ -259,3 +258,22 @@ nmap <leader>l :cd %:p:h<CR>:pwd<CR>
 command -bang -nargs=0 MyHeaderHome :r! cat ~/.config/myheaders/home
 command -bang -nargs=0 MyHeaderWork :r! cat ~/.config/myheaders/work
 command -bang -nargs=0 MyHeaderOther :r! cat ~/.config/myheaders/other_ubuntu
+
+set listchars=tab:▷_,trail:⇒,eol:▼,nbsp:▊
+set nolist
+let g:ListMode = 0
+let g:ListModeList = [ "List OFF", "List ON" ]
+function! ListModeToggle()
+    let g:ListMode = g:ListMode + 1
+    if g:ListMode >= len(g:ListModeList) | let g:ListMode = 0 | endif
+    if g:ListMode == 0
+        setlocal nolist
+    endif
+    if g:ListMode == 1
+        " setlocal fileencoding=utf-8
+        set listchars=tab:▷_,trail:⇒,eol:▼,nbsp:▊
+        setlocal list
+    endif
+    echo "List mode:" g:ListModeList[g:ListMode]
+endfunction
+nmap <silent> <F8> :call ListModeToggle()<CR>
