@@ -37,12 +37,12 @@ alias ssh-add='ssh-add -t 21600'
 
 function e-fuzzy(){
     local FZF_header="Select files to edit in NVIM. Ctrl-a: select all, Ctrl-space: deselect all."
-	$(which nvim) $(fd --type f --follow --max-depth 2 --hidden --exclude .git | fzf -m --header="$FZF_header" --reverse --height 50% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap)
+	$(which nvim) $(fd --type f --follow --max-depth 5 --hidden --exclude .git | fzf -m --header="$FZF_header" --reverse --height 50% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap)
 }
 
 function er-fuzzy(){
     local FZF_header="Select files to send to NVIM for editing. Ctrl-a: select all, Ctrl-space: deselect all."
-    ~/.local/bin/nvr $(fd --type f --follow --max-depth 2 --hidden --exclude .git | fzf -m --header="$FZF_header" --reverse --height 50% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap)
+    ~/.local/bin/nvr $(fd --type f --follow --max-depth 5 --hidden --exclude .git | fzf -m --header="$FZF_header" --reverse --height 50% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'bat --style=numbers --color=always {}' --preview-window=right:75%:wrap)
 }
 
 function cd-fuzzy(){
@@ -54,20 +54,20 @@ function cd-fuzzy(){
 function rm-file-fuzzy(){
     local FZF_header="Find files to remove. Depth 2. Ctrl-a: select all, Ctrl-space: deselect all."
     if [[ $1 == "-f" ]]; then
-        fd --follow --type f --max-depth 2 --hidden --exclude .git . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all --bind 'enter:execute[rm -f {+}]+abort'
+        fd --follow --type f --max-depth 5 --hidden --exclude .git . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all --bind 'enter:execute[rm -f {+}]+abort'
     fi
     if [[ -z $1 ]]; then
-        fd --follow --type f --max-depth 2 --hidden --exclude .git . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all --bind 'enter:execute[rm {+}]+abort'
+        fd --follow --type f --max-depth 5 --hidden --exclude .git . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all --bind 'enter:execute[rm {+}]+abort'
     fi
 }
 
 function rmdir-fuzzy(){
     local FZF_header="Find folders to remove. Depth 2. Ctrl-a: select all, Ctrl-space: deselect all."
     if [[ $1 == "-f" ]]; then
-        fd --follow --type d --max-depth 2 --hidden . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'tree --du -h -L 1 -a -C --dirsfirst {}' --preview-window=right:40% --bind 'enter:execute[rm -Rf {+}]+abort'
+        fd --follow --type d --max-depth 5 --hidden . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'tree --du -h -L 1 -a -C --dirsfirst {}' --preview-window=right:40% --bind 'enter:execute[rm -Rf {+}]+abort'
     fi
     if [[ -z $1 ]]; then
-        fd --follow --type d --max-depth 2 --hidden . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'tree --du -h -L 1 -a -C --dirsfirst {}' --preview-window=right:40% --bind 'enter:execute[rmdir {+}]+abort'
+        fd --follow --type d --max-depth 5 --hidden . | fzf -m --header="$FZF_header" --border --reverse --height 60% --bind=change:up,ctrl-a:select-all,ctrl-space:deselect-all,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'tree --du -h -L 1 -a -C --dirsfirst {}' --preview-window=right:40% --bind 'enter:execute[rmdir {+}]+abort'
     fi
 }
 
