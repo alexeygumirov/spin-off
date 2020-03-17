@@ -42,6 +42,46 @@ echo -ne "$TOPIC --- Update and upgrade complete --- : $timestamp\n" | tee -a "$
 ### }
 
 ### {
+# Begin - software properties common
+
+TOPIC="Software properties common:"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install software-properties-common -y | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - software properties common
+### }
+
+### {
+# Begin - curl
+
+TOPIC="curl:"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install curl -y | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - curl
+### }
+
+### {
+# Begin - pip & pip3
+
+TOPIC="pip & pip3:"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install python-pip -y | tee -a "$SETUP_LOG"
+sudo apt-get install python3-pip -y | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - pip & pip3
+### }
+
+### {
 # Begin - Install NeoVIM
 
 TOPIC="NeoVIM:"
@@ -355,3 +395,15 @@ echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SE
 # End - Installation of powerline fonts
 ### }
 
+### {
+# Begin - copy scripts
+
+TOPIC="copy scripts:"
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- copying  --- : $timestamp\n" | tee -a "$SETUP_LOG"
+mkdir $HOME/.scripts | tee -a "$SETUP_LOG"
+cp "$SETUP_DIR"/scripts/* $HOME/.scripts | tee -a "$SETUP_LOG"
+chmod 774 $HOME/.scripts/* | tee -a "$SETUP_LOG"
+
+# End - copy scripts
+### }

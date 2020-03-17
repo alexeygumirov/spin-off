@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# script to update apt packages
+
+LOG_FILE="$HOME/.maintenance_log"
+
+echo -n > "$LOG_FILE"
+echo "APT update" | tee -a "$LOG_FILE"
+sudo apt-get update | tee -a "$LOG_FILE"
+echo | tee -a "$LOG_FILE"
+echo "APT upgrade" | tee -a "$LOG_FILE"
+sudo apt-get -y upgrade | tee -a "$LOG_FILE"
+echo | tee -a "$LOG_FILE"
+echo "APT remove unused packages" | tee -a "$LOG_FILE"
+sudo apt-get -y autoremove | tee -a "$LOG_FILE"
+echo | tee -a "$LOG_FILE"
+echo "APT old versions packages" | tee -a "$LOG_FILE"
+sudo apt-get autoclean | tee -a "$LOG_FILE"
+echo | tee -a "$LOG_FILE"

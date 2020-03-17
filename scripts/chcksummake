@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# This script calculates MD5, SHA1, SHA256 and SHA512 checksums for a given file
+# and writes them in the $FILE.checksum file.
+
+FILE=$1
+
+if [[ -z $FILE ]]; then
+	echo "Please enter file name."
+	exit 1
+else
+	CHECKSUM_FILE="$FILE".checksum
+	echo -n "MD5 : " > "$CHECKSUM_FILE"
+	md5sum -b "$FILE" >> "$CHECKSUM_FILE" 
+	echo -n "SHA1 : " >> "$CHECKSUM_FILE"
+	sha1sum -b "$FILE" >> "$CHECKSUM_FILE" 
+	echo -n "SHA256 : " >> "$CHECKSUM_FILE"
+	sha256sum -b "$FILE" >> "$CHECKSUM_FILE" 
+	echo -n "SHA512 : " >> "$CHECKSUM_FILE"
+	sha512sum -b "$FILE" >> "$CHECKSUM_FILE" 
+fi
