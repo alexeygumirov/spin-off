@@ -82,6 +82,45 @@ echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_
 ### }
 
 ### {
+# Begin - pkg-config
+
+TOPIC="pkg-config:"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install pkg-config -y | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - pkg-config
+### }
+
+### {
+# Begin - libcairo2-dev
+
+TOPIC="libcairo2-dev:"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt-get install libcairo2-dev -y | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - libcairo2-dev
+### }
+
+### {
+# Begin - libgirepository1.0-dev
+
+TOPIC="libgirepository1.0-dev:"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
+sudo apt install libgirepository1.0-dev -y | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - libgirepository1.0-dev
+### }
+
+### {
 # Begin - Install NeoVIM
 
 TOPIC="NeoVIM:"
@@ -404,6 +443,27 @@ echo -ne "\n\r$TOPIC --- copying  --- : $timestamp\n" | tee -a "$SETUP_LOG"
 mkdir $HOME/.scripts | tee -a "$SETUP_LOG"
 cp "$SETUP_DIR"/scripts/* $HOME/.scripts | tee -a "$SETUP_LOG"
 chmod 774 $HOME/.scripts/* | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- copying complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
 
 # End - copy scripts
+### }
+
+### {
+# Begin - Golang installation
+
+TOPIC="Golang:"
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installing --- : $timestamp\n" | tee -a "$SETUP_LOG"
+mkdir $HOME/source | tee -a "$SETUP_LOG"
+pushd $HOME/source | tee -a "$SETUP_LOG"
+curl -LO https://dl.google.com/go/go1.14.linux-amd64.tar.gz | tee -a "$SETUP_LOG"
+tar zxvf go1.14.linux-amd64.tar.gz | tee -a "$SETUP_LOG"
+sudo mv go /opt/ | tee -a "$SETUP_LOG"
+sudo ln -s /opt/go/bin/go /usr/local/bin/go | tee -a "$SETUP_LOG"
+popd | tee -a "$SETUP_LOG"
+timestamp=$(date +%T.%N)
+echo -ne "\n\r$TOPIC --- Installation complete --- : $timestamp\n" | tee -a "$SETUP_LOG"
+
+# End - Golang installation
 ### }
