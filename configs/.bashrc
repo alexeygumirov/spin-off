@@ -151,6 +151,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# completion to sudo commands
+complete -c sudo
+
 # maintenance of the ssh-agent
 ssh-add -l &>/dev/null
 if [ "$?" == 2 ]; then
