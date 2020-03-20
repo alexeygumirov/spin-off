@@ -23,6 +23,7 @@ POWERLINE_BASH_SELECT=1
 export PATH=~/.scripts:~/.local/bin:/usr/local/go/bin:$PATH
 export PROMPT_DIRTRIM=6
 export PAGER=less
+export MANPAGER="sh -c 'col -bx | bat -l man --style=numbers'"
 export LANG=en_US.UTF-8
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export VISUAL=$(which nvim)
