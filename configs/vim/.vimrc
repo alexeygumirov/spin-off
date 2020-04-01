@@ -1,17 +1,19 @@
 " #####################################################
-" #           _    ____                   __          #
-" #          / \  / ___|  ___ ___  _ __  / _|         #
-" #         / _ \| |  _  / __/ _ \| '_ \| |_          #
-" #        / ___ \ |_| || (_| (_) | | | |  _|         #
-" #       /_/   \_\____(_)___\___/|_| |_|_|           #
+" #      _    ____       _   _                        #
+" #     / \  / ___|     | | | | ___  _ __ ___   ___   #
+" #    / _ \| |  _ _____| |_| |/ _ \| '_ ` _ \ / _ \  #
+" #   / ___ \ |_| |_____|  _  | (_) | | | | | |  __/  #
+" #  /_/   \_\____|     |_| |_|\___/|_| |_| |_|\___|  #
 " #                                                   #
-" #       Alexey Gumirov's generic config for         #
-" #       Ubuntu based operating systems.             #
+" #     Alexey Gumirov's home PC config for the       #
+" #     Windows Subsystem for Linux - Ubuntu.         #
 " #####################################################
-"
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
@@ -85,7 +87,7 @@ let g:netrw_sort_sequence = '[\/]$,*'
 " set autochdir
 
 " indent lines
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_char = '|'
 
 autocmd FileType markdown let g:indentLine_enabled=0
 
@@ -197,6 +199,7 @@ endfunction
 
 map <F3> :call NumberToggle()<CR>
 map <F4> :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>j :NERDTreeFind<CR>
 " Toggle Deoplete
 nmap <F5> :call MyToggleDeoplete()<CR>
 nmap <silent> <F7> :call ToggleSpell()<CR>
@@ -207,7 +210,7 @@ nmap <leader>P "*P
 nmap <leader>y "*yy
 vmap <leader>y "*y
 
-" FZF hotkeu
+" FZF hotkeys
 nmap <leader>f :FZF <CR>
 nmap <leader>h :FZF ~ <CR>
 
@@ -223,12 +226,12 @@ let g:TabModeList = [ "Expand Tab", "No Expand Tab" ]
 function! TabToggle()
     let g:TabMode = g:TabMode + 1
     if g:TabMode >= len(g:TabModeList) | let g:TabMode = 0 | endif
-    if g:TabMode == 0
+    if g:TabMode == 1
         set shiftwidth=4
         set softtabstop=4
         set expandtab
     endif
-    if g:TabMode == 1
+    if g:TabMode == 0
         set shiftwidth=4
         set softtabstop=0
         set noexpandtab
