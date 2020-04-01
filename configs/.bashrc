@@ -79,12 +79,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -96,22 +96,22 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 
 if [ "$color_prompt" = yes ]; then
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-	PS1='\n'
-	case "$LOGNAME" in
-		root)
-			PS1+='[\[\033[31m\]\u@\h in \w\[\033[00m\]]'
-			PS1+='\n'
-			PS1+='${debian_chroot:+($debian_chroot)}\[\033[00m\][\[\033[30;41m\]\D{%F}\[\033[00m\] '
-			PS1+='\[\033[30;41m\]\t\[\033[00m\]] \$ '
-			;;
-		*)
+        PS1='\n'
+        case "$LOGNAME" in
+                root)
+                        PS1+='[\[\033[31m\]\u@\h in \w\[\033[00m\]]'
+                        PS1+='\n'
+                        PS1+='${debian_chroot:+($debian_chroot)}\[\033[00m\][\[\033[30;41m\]\D{%F}\[\033[00m\] '
+                        PS1+='\[\033[30;41m\]\t\[\033[00m\]] \$ '
+                        ;;
+                *)
                         PS1+='[\u at \[\033[1;32m\]\h \[\033[00m\] in \[\033[31m\]\w\[\033[00m\]]'
                         PS1+='\n'
                         PS1+='${debian_chroot:+($debian_chroot)}\[\033[00m\][\[\033[30;45m\]\D{%F}\[\033[00m\] '
                         PS1+='\[\033[30;42m\]\t\[\033[00m\]]'
                         PS1+='$(__git_ps1 " \[\033[1;30;44m\]{%s}\[\033[00m\]") \$ '
                         ;;
-	esac		
+        esac            
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -168,7 +168,7 @@ if [ "$?" == 2 ]; then
 fi
 
 # if [[ -z $SSH_AUTH_SOCK ]]; then
-# 	eval `ssh-agent -s` > /dev/null 2>&1
+#       eval `ssh-agent -s` > /dev/null 2>&1
 # fi
 
 function tmux() {
@@ -195,26 +195,26 @@ function tmux() {
 
 # my dir list function
 function lsdr() {
-	if [[ ! -z $1 ]]; then
-		# OLD_PATH_ORIGIN="$OLDPWD"
-		# cd "$1"
+        if [[ ! -z $1 ]]; then
+                # OLD_PATH_ORIGIN="$OLDPWD"
+                # cd "$1"
                 pushd "$1"
-		ls -dlLahH */ \.*/
-		# cd "$OLDPWD"
+                ls -dlLahH */ \.*/
+                # cd "$OLDPWD"
                 popd
-		# OLDPWD="$OLD_PATH_ORIGIN"
-	else
-		ls -dlLahH */ \.*/
-	fi
+                # OLDPWD="$OLD_PATH_ORIGIN"
+        else
+                ls -dlLahH */ \.*/
+        fi
 }
 
 # Tmux all windows update .bashrc
 function tmux_source_bashrc() {
-	sessions=$(tmux list-windows)
-	while IFS= read -r LINE ; do
-		INDX=$(echo "$LINE" | cut -d':' -f1)
-		tmux send-keys -t "$INDX" " source ~/.bashrc && clear" C-m
-	done <<< "$sessions"
+        sessions=$(tmux list-windows)
+        while IFS= read -r LINE ; do
+                INDX=$(echo "$LINE" | cut -d':' -f1)
+                tmux send-keys -t "$INDX" " source ~/.bashrc && clear" C-m
+        done <<< "$sessions"
 }
 
 # Alias definitions.
