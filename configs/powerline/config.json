@@ -18,7 +18,7 @@
 			"theme": "default"
 		},
 		"shell": {
-			"colorscheme": "gitstatus",
+			"colorscheme": "awesome",
 			"theme": "awesome",
 			"local_themes": {
 				"continuation": "continuation",

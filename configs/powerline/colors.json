@@ -17,6 +17,7 @@
 
 		"darkestblue": 24,
 		"darkblue": 31,
+		"navyblue": 17,
 
 		"red": 1,
 		"darkestred": 52,
@@ -31,6 +32,7 @@
 
 		"darkorange": 94,
 		"mediumorange": 166,
+                "orange3": 172,
 		"brightorange": 208,
 		"brightestorange": 214,
 

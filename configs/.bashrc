@@ -29,6 +29,7 @@ export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export VISUAL=$(which nvim)
 export EDITOR="$VISUAL"
 export YOUTUBEDLDIR="~/downloads/youtube-dl/"
+export PLHOST='My new host'
 
 # If not running interactively, don't do anything
 case $- in
