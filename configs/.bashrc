@@ -226,6 +226,13 @@ if [ -f ~/.bashrc_aliases ]; then
     . ~/.bashrc_aliases
 fi
 
+# TMUX config
+# Uncomment lines below if you want TMUX to start after SSH login
+# if [[ -z "$TMUX" && "$USER" != "root" ]]
+# then
+#     tmux attach -d -t default || tmux new -s default
+# fi
+
 export FZF_DEFAULT_COMMAND='fd --type f --type d --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
