@@ -74,6 +74,39 @@ set showmatch
 set incsearch
 set hlsearch
 
+" Change leader key
+let mapleader = " "
+
+" Vim Split settings
+set splitbelow splitright
+
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
+
+nnoremap <silent> <C-Left> :vertical resize -5<CR>
+nnoremap <silent> <C-Right> :vertical resize +5<CR>
+nnoremap <silent> <C-Up> :resize -2<CR>
+nnoremap <silent> <C-Down> :resize +2<CR>
+
+map <leader>sv <C-w>t<C-w>H
+map <leader>sh <C-w>t<C-w>K
+
+" set fillchars+=vert:\ 
+
+"Terminal setup
+map <leader>tt :vnew term://bash<CR>
+tnoremap <A-q> <C-\><C-n>
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+
 " Setting for Netrw
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
@@ -149,8 +182,6 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1
 " tab formatter
 let g:airline#extensions#tabline#formatter = 'default'
 
-" Change leader key
-let mapleader = " "
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
