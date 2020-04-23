@@ -55,6 +55,7 @@ shopt -s checkwinsize
 
 # enable vi keys for command line
 set -o vi
+bind -m vi-insert "\C-l":clear-screen
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
