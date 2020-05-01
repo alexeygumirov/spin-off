@@ -275,7 +275,9 @@ echo -ne "${TOPIC} --- TMUX plug --- : ${timestamp}\n" | tee -a "${SETUP_LOG}"
 git clone https://github.com/tmux-plugins/tpm "$TMUX_CONFIG_DIR"/plugins/tpm | tee -a "${SETUP_LOG}"
 timestamp=$(date +%T.%N)
 echo -ne "\n\r${TOPIC} --- Copy .tmux.conf --- : ${timestamp}\n" | tee -a "${SETUP_LOG}"
-cp ~/.tmux.conf ~/.tmux.conf.back | tee -a "${SETUP_LOG}"
+if [[ -f ${HOME}/.tmux.conf ]]; then
+    cp ${HOME}/.tmux.conf ${HOME}/.tmux.conf.spin-off.back | tee -a "${SETUP_LOG}"
+fi
 cp "${SETUP_DIR}"/configs/tmux/.tmux.conf "${HOME}"/ | tee -a "${SETUP_LOG}"
 timestamp=$(date +%T.%N)
 echo -ne "\n\r${TOPIC} --- Intstallation complete --- : ${timestamp}\n" | tee -a "${SETUP_LOG}"
