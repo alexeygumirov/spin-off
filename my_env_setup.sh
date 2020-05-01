@@ -28,6 +28,7 @@
 #   vim-plug: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 #   tmux-plugings-manager: https://github.com/tmux-plugins/tpm
 #   go: https://golang.org/dl/
+# dpkg-query -W -f='${Status}' python3 | awk '{ print $3 }' | grep "^installed$"
 
 SETUP_DIR=""
 PLATFORM=""
