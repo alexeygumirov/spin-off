@@ -239,6 +239,10 @@ if [ -f ~/.bashrc_aliases ]; then
     . ~/.bashrc_aliases
 fi
 
+# Lf key binding
+bind -m vi-command -x '"\C-f": lf'
+bind -m vi-insert -x '"\C-f": lf'
+
 # TMUX config
 # Uncomment lines below if you want TMUX to start after SSH login
 # if [[ -z "$TMUX" && "$USER" != "root" ]]
