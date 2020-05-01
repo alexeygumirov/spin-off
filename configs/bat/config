@@ -1,0 +1,21 @@
+#####################################################
+#        _    ____    __        __         _        #
+#       / \  / ___|   \ \      / /__  _ __| | __    #
+#      / _ \| |  _ ____\ \ /\ / / _ \| '__| |/ /    #
+#     / ___ \ |_| |_____\ V  V / (_) | |  |   <     #
+#    /_/   \_\____|      \_/\_/ \___/|_|  |_|\_\    #
+#                                                   #
+#     Alexey Gumirov's working PC config for the    #
+#     Windows Subsystem for Linux - Ubuntu.         #
+#####################################################
+
+#My configuration for 'bat' viewer
+
+#Map my ~/.script files to shell
+--map-syntax "~/.scripts/*:sh;"
+
+--theme="Monokai Extended"
+
+--style="numbers"
+
+--color=always

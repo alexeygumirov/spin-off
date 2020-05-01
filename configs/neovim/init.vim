@@ -26,6 +26,12 @@ Plug 'tpope/vim-commentary'
 Plug 'mattn/Stupid-EasyMotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" { integration with lf
+Plug 'rbgrouleff/bclose.vim'
+Plug 'ptzz/lf.vim'
+"wrapper for floating window
+Plug 'voldikss/vim-floaterm'
+" }
 
 call plug#end()
 
@@ -73,6 +79,8 @@ set showmatch
 
 set incsearch
 set hlsearch
+set ignorecase
+set smartcase
 
 " Change leader key
 let mapleader = " "
@@ -313,3 +321,30 @@ nmap <silent> <F8> :call ListModeToggle()<CR>
 
 " Vim commentary. Adding my file types
 autocmd FileType toml setlocal commentstring=#%s
+autocmd FileType openhab setlocal commentstring=//%s
+
+" gitgutter line numbers highlight
+let g:gitgutter_highlight_linenrs = 1
+
+" autocommenting toggle
+map <silent> <leader>ac :setlocal formatoptions-=cro<CR>
+map <silent> <leader>aC :setlocal formatoptions=cro<CR>
+
+" LF
+command! LF FloatermNew lf
+let g:floaterm_height = 0.8
+let g:floaterm_width = 0.8
+let g:NERDTreeHijackNetrw = 0
+let g:lf_replace_netrw = 1
+let g:lf_map_keys = 0
+nmap <leader>o :LF<CR>
+
+"Command to insert hash
+function MySha256Hash()
+	let @s = system("date +'\%s' | sha256sum | cut -d' ' -f1 | tr -d '\n'")
+	norm "sp
+endfunction
+nmap <silent> <leader>d :call MySha256Hash()<CR>
+
+"function to convert 
+nmap <silent> <leader>mh :norm 0yi"o{{< figure alt=""Pk0f(lyE(j0EEa src=""Pk0f[yi[j$a title=""P$a width="" >}}0

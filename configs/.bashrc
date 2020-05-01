@@ -20,7 +20,8 @@ POWERLINE_BASH_SELECT=1
 . /usr/share/powerline/bindings/bash/powerline.sh 
 
 # my environment variables ------
-export PATH=~/.scripts:~/.local/bin:/usr/local/go/bin:$PATH
+export GOPATH=$HOME/go
+export PATH=~/.scripts:~/.local/bin:/usr/local/go/bin:$GOPATH/bin:$PATH
 export PROMPT_DIRTRIM=6
 export PAGER=less
 export MANPAGER="sh -c 'col -bx | bat -l man --style=numbers'"
@@ -30,6 +31,7 @@ export VISUAL=$(which nvim)
 export EDITOR="$VISUAL"
 export YOUTUBEDLDIR="~/downloads/youtube-dl/"
 export PLHOST='My new host'
+export BAT_CONFIG_PATH="~/.config/bat/config"
 
 # If not running interactively, don't do anything
 case $- in
@@ -197,17 +199,27 @@ function tmux() {
 
 # my dir list function
 function lsdr() {
-        if [[ ! -z $1 ]]; then
-                # OLD_PATH_ORIGIN="$OLDPWD"
-                # cd "$1"
-                pushd "$1"
-                ls -dlLahH */ \.*/
-                # cd "$OLDPWD"
-                popd
-                # OLDPWD="$OLD_PATH_ORIGIN"
-        else
-                ls -dlLahH */ \.*/
-        fi
+    if [[ ! -z $1 ]]; then
+        OLD_PATH_ORIGIN="$OLDPWD"
+        cd "$1"
+        ls -doLahH */ \.*/
+        cd "$OLDPWD"
+        OLDPWD="$OLD_PATH_ORIGIN"
+    else
+        ls -doLahH */ \.*/
+    fi
+}
+
+function lsdf() {
+	if [[ ! -z $1 ]]; then
+		OLD_PATH_ORIGIN="$OLDPWD"
+		cd "$1"
+		ls -dlLahH */ \.*/
+		cd "$OLDPWD"
+		OLDPWD="$OLD_PATH_ORIGIN"
+	else
+		ls -dlLahH */ \.*/
+	fi
 }
 
 # Tmux all windows update .bashrc

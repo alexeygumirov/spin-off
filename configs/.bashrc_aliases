@@ -17,7 +17,9 @@ alias la='ls -AN --group-directories-first'
 
 # -------my alias-----
 alias l='ls -xN --group-directories-first'
-alias lsd='ls -lAFhNH --group-directories-first'
+alias lsd='ls -oAFhNH --group-directories-first'
+alias lsf='ls -lLAFhH --group-directories-first'
+alias lsg='ls -gLAFhH --group-directories-first'
 alias lsc='ls -alcN'
 alias psx='ps -aux | grep -v "ps -aux"'
 alias psf='ps -ef | grep -v "ps -ef"'
@@ -110,8 +112,8 @@ function gitrm-fuzzy(){
 }
 
 function gitlog-fuzzy(){
-    local FZF_header="\`git-log\`. Select commit."
-    git log --pretty=oneline | cut -c-20 | fzf -m --header="$FZF_header" --reverse --border --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git show --color=always {} | bat -l"Git Commit" --color=always' --preview-window=right:75%
+    local FZF_header="\`git-log -20\`. Select commit."
+    git log -20 --pretty=oneline | cut -c-20 | fzf -m --header="$FZF_header" --reverse --border --bind=change:up,f1:preview-page-down,f2:preview-down,f3:preview-up,f4:preview-page-up --preview 'git show --color=always {} | bat -l"Git Commit" --color=always' --preview-window=right:75%
 }
 
 function gitmerge-fuzzy(){
