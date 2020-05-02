@@ -30,12 +30,64 @@
 #   go: https://golang.org/dl/
 # dpkg-query -W -f='${Status}' python3 | awk '{ print $3 }' | grep "^installed$"
 
+PKG_LIST="software-properties-common,\
+curl,\
+python-pip,\
+pkg-config,\
+libcairo2-dev,\
+libgirepository1.0-dev,\
+neovim,\
+python3-pip,\
+vim,\
+tmux,\
+powerline,\
+silversearcher-ag,\
+tree,\
+fonts-powerline,\
+mediainfo,\
+p7zip,\
+unrar,\
+xpdf\
+"
+
 SETUP_DIR=""
 PLATFORM=""
 BAT_VIEWER_VER="0.15.0"
 FD_VER="8.0.0"
 RIPGREP_VER="12.0.1"
 GO_VER="1.14.2"
+TOPIC=""
+
+TOPIC="apt update & upgrade"
+function aptupdupg() {
+    local tmstmp=$(date +'%T.%N')
+    echo "${tmstmp} : ${TOPIC} : Starting.\n"
+    sudo apt-get update -y
+    sudo apt-get upgrade -y
+    tmstmp=$(date +%T.%N)
+    echo "${tmstmp} : ${TOPIC} : Complete.\n"
+}
+
+function pkginstall() {
+    local FieldSeparator=$IFS
+    local IS_PKG_INSTALELD=""
+    local tmstmp=""
+    IFS=','
+    for pkg in ${PKG_LIST};
+    do
+        IS_PKG_INSTALELD=$(dpkg-query -W -f='${Status}' ${pkg} | awk '{ print $3 }' | grep "^installed$")
+        if [[ -z ${IS_PKG_INSTALELD} ]]; then
+            tmstmp=$(date +%T.%N)
+            echo -ne "${tmstmp} : ${pkg} : Installaing --- : ${timestamp}\n"
+            sudo apt-get install -y ${pkg}
+            tmstmp=$(date +%T.%N)
+            echo -ne "${TOPIC} --- Update and upgrade complete --- : ${timestamp}\n"
+        else
+            echo "${pkg} - is already installed"
+        fi
+    done
+    IFS=${FieldSeparator}
+}
 
 # add LF and lf-view script
 
@@ -64,6 +116,7 @@ fi
 SETUP_LOG="${HOME}/my_env_setup.log"
 timestamp=$(date +%T.%N)
 echo -ne "\r${timestamp}: Setup of environment is starting.\n" > "${SETUP_LOG}"
+
 
 ### {
 # Begin - Repo update and upgrade 
