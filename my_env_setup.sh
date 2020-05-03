@@ -52,20 +52,25 @@ xpdf\
 
 SETUP_DIR=""
 PLATFORM=""
-BAT_VIEWER_VER="0.15.0"
-FD_VER="8.0.0"
-RIPGREP_VER="12.0.1"
-GO_VER="1.14.2"
 TOPIC=""
 
-TOPIC="apt update & upgrade"
-function aptupdupg() {
+function topic_start() {
     local tmstmp=$(date +'%T.%N')
     echo "${tmstmp} : ${TOPIC} : Starting.\n"
+}
+
+function topic_end() {
+    local tmstmp=$(date +'%T.%N')
+    echo "${tmstmp} : ${TOPIC} : Complete.\n"
+}
+
+function aptupdupg() {
+    local tmstmp=$(date +'%T.%N')
+    echo "${tmstmp} : apt update & upgrade : Starting.\n"
     sudo apt-get update -y
     sudo apt-get upgrade -y
     tmstmp=$(date +%T.%N)
-    echo "${tmstmp} : ${TOPIC} : Complete.\n"
+    echo "${tmstmp} : apt update & upgrade : Complete.\n"
 }
 
 function pkginstall() {
@@ -78,12 +83,12 @@ function pkginstall() {
         IS_PKG_INSTALELD=$(dpkg-query -W -f='${Status}' ${pkg} | awk '{ print $3 }' | grep "^installed$")
         if [[ -z ${IS_PKG_INSTALELD} ]]; then
             tmstmp=$(date +%T.%N)
-            echo -ne "${tmstmp} : ${pkg} : Installaing --- : ${timestamp}\n"
+            echo -ne "${tmstmp} : ${pkg} : Installing."
             sudo apt-get install -y ${pkg}
             tmstmp=$(date +%T.%N)
-            echo -ne "${TOPIC} --- Update and upgrade complete --- : ${timestamp}\n"
+            echo -ne "${tmstmp} : ${pkg} : Installation complete.\n"
         else
-            echo "${pkg} - is already installed"
+            echo "${pkg} - is already installed."
         fi
     done
     IFS=${FieldSeparator}
@@ -390,8 +395,6 @@ echo -ne "${TOPIC} --- Bash setup is complete --- : ${timestamp}\n" | tee -a "${
 TOPIC="FZF & FD:"
 timestamp=$(date +%T.%N)
 echo -ne "\n\r${TOPIC} --- Installting fd --- : ${timestamp}\n" | tee -a "${SETUP_LOG}"
-FD_x64="https://github.com/sharkdp/fd/releases/download/v${FD_VER}/fd_${FD_VER}_amd64.deb"
-FD_ARM="https://github.com/sharkdp/fd/releases/download/v${FD_VER}/fd_${FD_VER}_armhf.deb"
 case ${PLATFORM} in
     "x86_64")
         pushd ${HOME}/source | tee -a "${SETUP_LOG}"
@@ -413,7 +416,6 @@ timestamp=$(date +%T.%N)
 echo -ne "\n\r${TOPIC} --- Installting silversearcher-ag --- : ${timestamp}\n" | tee -a "${SETUP_LOG}"
 sudo apt-get install -y silversearcher-ag | tee -a "${SETUP_LOG}"
 timestamp=$(date +%T.%N)
-RIPGREP_x64="https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VER}/ripgrep_${RIPGREP_VER}_amd64.deb"
 case ${PLATFORM} in
     "x86_64")
         echo -ne "\n\r${TOPIC} --- Installting ripgrep --- : ${timestamp}\n" | tee -a "${SETUP_LOG}"
