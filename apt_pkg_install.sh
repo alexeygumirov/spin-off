@@ -47,7 +47,8 @@ fonts-powerline,\
 mediainfo,\
 p7zip,\
 unrar,\
-xpdf\
+xpdf,\
+libicu-dev\
 "
 
 
