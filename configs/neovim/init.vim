@@ -1,18 +1,22 @@
-"#####################################################
-"#           _    ____                   __          #
-"#          / \  / ___|  ___ ___  _ __  / _|         #
-"#         / _ \| |  _  / __/ _ \| '_ \| |_          #
-"#        / ___ \ |_| || (_| (_) | | | |  _|         #
-"#       /_/   \_\____(_)___\___/|_| |_|_|           #
-"#                                                   #
-"#       Alexey Gumirov's generic config for         #
-"#       Ubuntu based operating systems.             #
-"#####################################################
-
+" #####################################################
+" #           _    ____                   __          #
+" #          / \  / ___|  ___ ___  _ __  / _|         #
+" #         / _ \| |  _  / __/ _ \| '_ \| |_          #
+" #        / ___ \ |_| || (_| (_) | | | |  _|         #
+" #       /_/   \_\____(_)___\___/|_| |_|_|           #
+" #                                                   #
+" #       Alexey Gumirov's generic config for         #
+" #       Ubuntu based operating systems.             #
+" #####################################################
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'scrooloose/nerdtree'
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-syntastic/syntastic'
@@ -32,28 +36,32 @@ Plug 'ptzz/lf.vim'
 "wrapper for floating window
 Plug 'voldikss/vim-floaterm'
 " }
+Plug 'dhruvasagar/vim-table-mode'
 
 call plug#end()
 
 " { Color schemes section
 "
-"       { PaperColor
-set t_Co=256   " This is may or may not needed.
+"   { PaperColor
+" set t_Co=256   " This is may or may not needed.
 " set background=light
 set background=dark
 let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \     'default.dark': {
-            \       'transparent_background': 1
-            \     }
-            \   }
-            \ }
+  \   'theme': {
+  \     'default': {
+  \ 	  'allow_italic': 1,
+  \		  'allow_bold': 1,
+  \       'transparent_background': 0
+  \     }
+  \   }
+  \ }
 color PaperColor
-"       } end of PaperColor
-"
+"   } end of PaperColor
 " } End of color scheme section
 
-let g:airline_theme='molokai'
+set termguicolors
+
+let g:airline_theme='papercolor'
 " let g:airline_solarized_bg='dark'
 
 syntax on
@@ -127,8 +135,12 @@ let g:netrw_sort_sequence = '[\/]$,*'
 
 " indent lines
 let g:indentLine_char = '|'
-
-autocmd FileType markdown let g:indentLine_enabled=0
+let g:indentLine_concealcursor = 'ic'
+let g:indentLine_enabled = 0
+autocmd FileType json let g:indentLine_enabled=1
+autocmd FileType sh let g:indentLine_enabled=1
+autocmd FileType python let g:indentLine_enabled=1
+autocmd FileType go let g:indentLine_enabled=1
 
 " Autosave and load folding view
 autocmd BufWinLeave *.* mkview
@@ -144,9 +156,6 @@ function! NumberToggle()
         set rnu
     endif
 endfunction
-
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeShowHidden = 1
 
 " Setup of Syntastic plugin
 "
@@ -170,7 +179,13 @@ let g:syntastic_python_checkers = ["python"]
 " } End of Syntastic setup
 
 " enable Deoplete at startup
-" let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
+
+autocmd Filetype python call deoplete#enable()
+autocmd Filetype markdown call deoplete#enable()
+autocmd Filetype javascript call deoplete#enable()
+autocmd Filetype sh call deoplete#enable()
+autocmd Filetype go call deoplete#enable()
 
 "----------------------------------------------
 " Plugin: bling/vim-airline
@@ -200,7 +215,7 @@ nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>+ <Plug>AirlineSelectNextTab
+nmap <leader>= <Plug>AirlineSelectNextTab
 
 " Disable showing tabs in the tabline. This will ensure that the buffers are
 " what is shown in the tabline at all times.
@@ -211,7 +226,7 @@ let g:airline_powerline_fonts = 1
 
 "switch spellcheck languages
 let g:myLang = 0
-let g:myLangList = [ "nospell", "en_us", "de_de" ]
+let g:myLangList = [ "nospell", "en_us", "de_de", "ru_ru" ]
 function! ToggleSpell()
     "loop through languages
     let g:myLang = g:myLang + 1
@@ -219,6 +234,7 @@ function! ToggleSpell()
     if g:myLang == 0 | set nospell | endif
     if g:myLang == 1 | setlocal spell spelllang=en_us | endif
     if g:myLang == 2 | setlocal spell spelllang=de_de | endif
+    if g:myLang == 2 | setlocal spell spelllang=ru_ru | endif
     echo "spell checking language:" g:myLangList[g:myLang]
 endfunction
 
@@ -235,8 +251,6 @@ function! MyToggleDeoplete()
 endfunction
 
 map <F3> :call NumberToggle()<CR>
-map <F4> :NERDTreeToggle<CR>
-nnoremap <silent> <Leader>j :NERDTreeFind<CR>
 " Toggle Deoplete
 nmap <F5> :call MyToggleDeoplete()<CR>
 nmap <silent> <F7> :call ToggleSpell()<CR>
@@ -247,9 +261,23 @@ nmap <leader>P "*P
 nmap <leader>y "*yy
 vmap <leader>y "*y
 
-" FZF hotkeys
-nmap <leader>f :FZF <CR>
-nmap <leader>h :FZF ~ <CR>
+" FZF
+let g:fzf_layout = { 'up':'~90%', 'window': { 'width': 0.9, 'height': 0.9, 'xoffset': 0.5, 'yoffset': 0.5} }
+let g:fzf_preview_window = 'right:60%'
+command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'bat {}', '--preview-window=right:60%']}, <bang>0)
+command! -bang -nargs=? Rg call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%'), <bang>0)
+nmap <leader>ff :Files %:p:h<CR>
+nmap <leader>fh :Files ~<CR>
+function Rghome()
+    :cd ~/
+    :Rg
+endfunction
+nmap <leader>rh :call Rghome()<CR>
+function Rghere()
+    :cd %:p:h
+    :Rg
+endfunction
+nmap <leader>rr :call Rghere()<CR>
 
 set tabstop=4
 " virtual tabstops using spaces
@@ -263,12 +291,12 @@ let g:TabModeList = [ "Expand Tab", "No Expand Tab" ]
 function! TabToggle()
     let g:TabMode = g:TabMode + 1
     if g:TabMode >= len(g:TabModeList) | let g:TabMode = 0 | endif
-    if g:TabMode == 1
+    if g:TabMode == 0
         set shiftwidth=4
         set softtabstop=4
         set expandtab
     endif
-    if g:TabMode == 0
+    if g:TabMode == 1
         set shiftwidth=4
         set softtabstop=0
         set noexpandtab
@@ -284,23 +312,33 @@ function! TagConcealLevel()
     if g:TagConLevel >= len(g:TagConLevelList) | let g:TagConLevel = 0 | endif
     if g:TagConLevel == 1
         set conceallevel=0
+        set concealcursor=""
     endif
+        let current_ft = &filetype
     if g:TagConLevel == 0
         set conceallevel=2
+        set concealcursor-=n
     endif
     echo "Conceal " g:TagConLevelList[g:TagConLevel]
 endfunction
 nmap <leader>c :call TagConcealLevel()<CR>
+autocmd FileType markdown set conceallevel=0 | set concealcursor=""
 
 " change path to file path
 nmap <leader>l :cd %:p:h<CR>:pwd<CR>
 
 " commands to insert my headers
-command -bang -nargs=0 MyHeaderHome :r! cat ~/.config/myheaders/home
-command -bang -nargs=0 MyHeaderWork :r! cat ~/.config/myheaders/work
-command -bang -nargs=0 MyHeaderOther :r! cat ~/.config/myheaders/other_ubuntu
+function MyHeader(header)
+    let @o=system("bash -c 'cat ~/.config/myheaders/" . expand(a:header) . "'")
+    norm gg"oP
+endfunction
+command -bang -nargs=0 MyHeaderHome :call MyHeader('home')
+command -bang -nargs=0 MyHeaderWork :call MyHeader('work')
+command -bang -nargs=0 MyHeaderOther :call MyHeader('other_ubuntu')
+command -bang -nargs=0 MyYAMLheader :call MyHeader('AGheader.yaml')
+command -bang -nargs=0 MyYAMLPNheader :call MyHeader('PNheader.yaml')
 
-set listchars=tab:▷_,trail:⇒,eol:▼,nbsp:▊
+set listchars=tab:≫.,trail:⇒,eol:▼,nbsp:▊
 set nolist
 let g:ListMode = 0
 let g:ListModeList = [ "List OFF", "List ON" ]
@@ -312,7 +350,7 @@ function! ListModeToggle()
     endif
     if g:ListMode == 1
         " setlocal fileencoding=utf-8
-        set listchars=tab:▷_,trail:⇒,eol:▼,nbsp:▊
+        set listchars=tab:≫.,trail:⇒,eol:▼,nbsp:▊
         setlocal list
     endif
     echo "List mode:" g:ListModeList[g:ListMode]
@@ -334,17 +372,18 @@ map <silent> <leader>aC :setlocal formatoptions=cro<CR>
 command! LF FloatermNew lf
 let g:floaterm_height = 0.8
 let g:floaterm_width = 0.8
-let g:NERDTreeHijackNetrw = 0
+let g:floaterm_rootmarkers = ['.git', '.gitignore']
+hi Floaterm guibg=black
 let g:lf_replace_netrw = 1
 let g:lf_map_keys = 0
 nmap <leader>o :LF<CR>
 
 "Command to insert hash
 function MySha256Hash()
-	let @s = system("date +'\%s' | sha256sum | cut -d' ' -f1 | tr -d '\n'")
-	norm "sp
+    let @s = system("date +'\%s' | sha256sum | cut -d' ' -f1 | tr -d '\n'")
+    norm "sp
 endfunction
 nmap <silent> <leader>d :call MySha256Hash()<CR>
 
-"function to convert 
-nmap <silent> <leader>mh :norm 0yi"o{{< figure alt=""Pk0f(lyE(j0EEa src=""Pk0f[yi[j$a title=""P$a width="" >}}0
+"Table mode plugin config for GitHub flavored tables
+let g:table_mode_corner='|'
